@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.FabricCaUserMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <id column="server_name" property="serverName" jdbcType="VARCHAR" />
+    <result column="secret" property="secret" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="Identity_type" property="identityType" jdbcType="VARCHAR" />
+    <result column="affiliation" property="affiliation" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="max_enrollments" property="maxEnrollments" jdbcType="INTEGER" />
+    <result column="roles" property="roles" jdbcType="VARCHAR" />
+    <result column="tls_enable" property="tlsEnable" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" extends="BaseResultMap" >
+    <result column="attributes" property="attributes" jdbcType="LONGVARCHAR" />
+    <result column="tls_cert" property="tlsCert" jdbcType="LONGVARCHAR" />
+    <result column="tls_key" property="tlsKey" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, server_name, secret, creator, owner, user_type, Identity_type, affiliation, 
+    state, max_enrollments, roles, tls_enable
+  </sql>
+  <sql id="Blob_Column_List" >
+    attributes, tls_cert, tls_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fabric_ca_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from fabric_ca_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    insert into fabric_ca_user (user_id, server_name, secret, 
+      creator, owner, user_type, 
+      Identity_type, affiliation, state, 
+      max_enrollments, roles, tls_enable, 
+      attributes, tls_cert, tls_key
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{serverName,jdbcType=VARCHAR}, #{secret,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{identityType,jdbcType=VARCHAR}, #{affiliation,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{maxEnrollments,jdbcType=INTEGER}, #{roles,jdbcType=VARCHAR}, #{tlsEnable,jdbcType=BIT}, 
+      #{attributes,jdbcType=LONGVARCHAR}, #{tlsCert,jdbcType=LONGVARCHAR}, #{tlsKey,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    insert into fabric_ca_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="serverName != null" >
+        server_name,
+      </if>
+      <if test="secret != null" >
+        secret,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="identityType != null" >
+        Identity_type,
+      </if>
+      <if test="affiliation != null" >
+        affiliation,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="maxEnrollments != null" >
+        max_enrollments,
+      </if>
+      <if test="roles != null" >
+        roles,
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable,
+      </if>
+      <if test="attributes != null" >
+        attributes,
+      </if>
+      <if test="tlsCert != null" >
+        tls_cert,
+      </if>
+      <if test="tlsKey != null" >
+        tls_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="secret != null" >
+        #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null" >
+        #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="maxEnrollments != null" >
+        #{maxEnrollments,jdbcType=INTEGER},
+      </if>
+      <if test="roles != null" >
+        #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="attributes != null" >
+        #{attributes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCert != null" >
+        #{tlsCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsKey != null" >
+        #{tlsKey,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    update fabric_ca_user
+    <set >
+      <if test="secret != null" >
+        secret = #{secret,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        Identity_type = #{identityType,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null" >
+        affiliation = #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="maxEnrollments != null" >
+        max_enrollments = #{maxEnrollments,jdbcType=INTEGER},
+      </if>
+      <if test="roles != null" >
+        roles = #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable = #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="attributes != null" >
+        attributes = #{attributes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCert != null" >
+        tls_cert = #{tlsCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsKey != null" >
+        tls_key = #{tlsKey,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    update fabric_ca_user
+    set secret = #{secret,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      Identity_type = #{identityType,jdbcType=VARCHAR},
+      affiliation = #{affiliation,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      max_enrollments = #{maxEnrollments,jdbcType=INTEGER},
+      roles = #{roles,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT},
+      attributes = #{attributes,jdbcType=LONGVARCHAR},
+      tls_cert = #{tlsCert,jdbcType=LONGVARCHAR},
+      tls_key = #{tlsKey,jdbcType=LONGVARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    update fabric_ca_user
+    set secret = #{secret,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      Identity_type = #{identityType,jdbcType=VARCHAR},
+      affiliation = #{affiliation,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      max_enrollments = #{maxEnrollments,jdbcType=INTEGER},
+      roles = #{roles,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT}
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+  <delete id="deleteByServer" parameterType="java.lang.String" >
+    delete from fabric_ca_user
+    where `server_name` = #{serverName,jdbcType=VARCHAR}
+  </delete>
+
+
+  <resultMap id="UserAndCerts" type="cn.shijinshi.fabricmanager.dao.entity.UserAndCerts" extends="ResultMapWithBLOBs" >
+      <association property="certificate" javaType="cn.shijinshi.fabricmanager.dao.entity.Certificates">
+          <id column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+          <id column="authority_key_identifier" property="authorityKeyIdentifier" jdbcType="VARCHAR" />
+          <result column="cert_pem" property="certPem" jdbcType="LONGVARCHAR" />
+          <result column="key_pem" property="keyPem" jdbcType="LONGVARCHAR" />
+          <result column="not_before" property="notBefore" jdbcType="TIMESTAMP" />
+          <result column="not_after" property="notAfter" jdbcType="TIMESTAMP" />
+          <result column="cert_state" property="state" jdbcType="VARCHAR" />
+      </association>
+  </resultMap>
+
+  <select id="getUserCerts" resultMap="UserAndCerts" >
+    SELECT
+	  A.*,
+	  B.serial_number,
+	  B.authority_key_identifier,
+	  B.cert_pem,
+	  B.key_pem,
+	  B.not_before,
+	  B.not_after,
+	  B.state cert_state
+    FROM
+	  fabric_ca_user A
+	  LEFT JOIN certificates B
+	  on B.ca_user_id = A.user_id
+	  and B.server_name = A.server_name
+    WHERE
+	  A.user_id = #{userId,jdbcType=VARCHAR}
+	  AND A.`server_name` = #{serverName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByRequester" resultMap="UserAndCerts" >
+    SELECT
+	  A.*,
+	  B.serial_number,
+	  B.authority_key_identifier,
+	  B.cert_pem,
+	  B.key_pem,
+	  B.not_before,
+	  B.not_after,
+	  B.state cert_state
+    FROM
+	  fabric_ca_user A
+	  LEFT JOIN certificates B
+	  on B.ca_user_id = A.user_id
+	  and B.server_name = A.server_name
+    where owner in (select user_id from user where affiliation = #{affiliation,jdbcType=VARCHAR} or affiliation like #{affiliationLike,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectOrgAdminUser" resultMap="UserAndCerts" >
+    SELECT
+	  A.*,
+	  B.cert_pem,
+	  B.key_pem,
+	  B.not_before,
+	  B.not_after,
+	  B.state cert_state
+    FROM
+	  fabric_ca_user A
+	  LEFT JOIN certificates B
+	  on B.ca_user_id = A.user_id
+    where user_type = 'user'
+    and Identity_type = 'admin'
+  </select>
+
+  <select id="selectCaAdminUser" resultType="java.lang.String" >
+    SELECT
+	  user_id
+    FROM
+	  fabric_ca_user
+    where user_type = 'client'
+    and Identity_type = 'admin'
+    and `server_name` = #{serverName,jdbcType=VARCHAR}
+  </select>
+
+
+  <update id="updateUserState" >
+    update fabric_ca_user
+    set state = #{state,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and `server_name` = #{serverName,jdbcType=VARCHAR}
+  </update>
+
+
+  <update id="updateTlsCert" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaUser" >
+    update fabric_ca_user
+    set tls_enable = #{tlsEnable,jdbcType=BIT},
+      tls_cert = #{tlsCert,jdbcType=LONGVARCHAR},
+      tls_key = #{tlsKey,jdbcType=LONGVARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+</mapper>

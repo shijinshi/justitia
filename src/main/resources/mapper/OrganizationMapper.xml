@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    <id column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="org_msp_id" property="orgMspId" jdbcType="VARCHAR" />
+    <result column="org_type" property="orgType" jdbcType="VARCHAR" />
+    <result column="tls_enable" property="tlsEnable" jdbcType="BIT" />
+    <result column="tls_ca_server" property="tlsCaServer" jdbcType="VARCHAR" />
+    <result column="orderer_ip" property="ordererIp" jdbcType="VARCHAR" />
+    <result column="orderer_port" property="ordererPort" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.Organization" extends="BaseResultMap" >
+    <result column="tls_ca_cert" property="tlsCaCert" jdbcType="LONGVARCHAR" />
+    <result column="tls_ca_key" property="tlsCaKey" jdbcType="LONGVARCHAR" />
+    <result column="orderer_tls_cert" property="ordererTlsCert" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    org_name, org_msp_id, org_type, tls_enable, tls_ca_server, orderer_ip, orderer_port
+  </sql>
+  <sql id="Blob_Column_List" >
+    tls_ca_cert, tls_ca_key, orderer_tls_cert
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from organization
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from organization
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    insert into organization (org_name, org_msp_id, org_type, 
+      tls_enable, tls_ca_server, orderer_ip, 
+      orderer_port, tls_ca_cert, tls_ca_key, 
+      orderer_tls_cert)
+    values (#{orgName,jdbcType=VARCHAR}, #{orgMspId,jdbcType=VARCHAR}, #{orgType,jdbcType=VARCHAR}, 
+      #{tlsEnable,jdbcType=BIT}, #{tlsCaServer,jdbcType=VARCHAR}, #{ordererIp,jdbcType=VARCHAR}, 
+      #{ordererPort,jdbcType=INTEGER}, #{tlsCaCert,jdbcType=LONGVARCHAR}, #{tlsCaKey,jdbcType=LONGVARCHAR}, 
+      #{ordererTlsCert,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    insert into organization
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="orgMspId != null" >
+        org_msp_id,
+      </if>
+      <if test="orgType != null" >
+        org_type,
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable,
+      </if>
+      <if test="tlsCaServer != null" >
+        tls_ca_server,
+      </if>
+      <if test="ordererIp != null" >
+        orderer_ip,
+      </if>
+      <if test="ordererPort != null" >
+        orderer_port,
+      </if>
+      <if test="tlsCaCert != null" >
+        tls_ca_cert,
+      </if>
+      <if test="tlsCaKey != null" >
+        tls_ca_key,
+      </if>
+      <if test="ordererTlsCert != null" >
+        orderer_tls_cert,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgMspId != null" >
+        #{orgMspId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="tlsCaServer != null" >
+        #{tlsCaServer,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererIp != null" >
+        #{ordererIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPort != null" >
+        #{ordererPort,jdbcType=INTEGER},
+      </if>
+      <if test="tlsCaCert != null" >
+        #{tlsCaCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCaKey != null" >
+        #{tlsCaKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ordererTlsCert != null" >
+        #{ordererTlsCert,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    update organization
+    <set >
+      <if test="orgMspId != null" >
+        org_msp_id = #{orgMspId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null" >
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable = #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="tlsCaServer != null" >
+        tls_ca_server = #{tlsCaServer,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererIp != null" >
+        orderer_ip = #{ordererIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ordererPort != null" >
+        orderer_port = #{ordererPort,jdbcType=INTEGER},
+      </if>
+      <if test="tlsCaCert != null" >
+        tls_ca_cert = #{tlsCaCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCaKey != null" >
+        tls_ca_key = #{tlsCaKey,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ordererTlsCert != null" >
+        orderer_tls_cert = #{ordererTlsCert,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    update organization
+    set org_msp_id = #{orgMspId,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT},
+      tls_ca_server = #{tlsCaServer,jdbcType=VARCHAR},
+      orderer_ip = #{ordererIp,jdbcType=VARCHAR},
+      orderer_port = #{ordererPort,jdbcType=INTEGER},
+      tls_ca_cert = #{tlsCaCert,jdbcType=LONGVARCHAR},
+      tls_ca_key = #{tlsCaKey,jdbcType=LONGVARCHAR},
+      orderer_tls_cert = #{ordererTlsCert,jdbcType=LONGVARCHAR}
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    update organization
+    set org_msp_id = #{orgMspId,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT},
+      tls_ca_server = #{tlsCaServer,jdbcType=VARCHAR},
+      orderer_ip = #{ordererIp,jdbcType=VARCHAR},
+      orderer_port = #{ordererPort,jdbcType=INTEGER}
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+
+
+  <select id="selectAllOrgInfo" resultMap="ResultMapWithBLOBs">
+    select  <include refid="Base_Column_List" />
+    from organization
+  </select>
+
+
+  <select id="selectAllOrg" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from organization
+  </select>
+
+  <delete id="deleteOrganization">
+        truncate table organization;
+</delete>
+
+  <update id="updateTlsCaServer" parameterType="cn.shijinshi.fabricmanager.dao.entity.Organization" >
+    update organization
+    set tls_ca_server = #{tlsCaServer,jdbcType=VARCHAR}
+    where org_name = #{orgName,jdbcType=VARCHAR}
+  </update>
+</mapper>

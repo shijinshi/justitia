@@ -1,0 +1,42 @@
+@import '~antd/lib/style/themes/default.less';
+@import '../../utils/utils.less';
+
+.detailInfo {
+  font-size: 20px;
+  display: inline-block;
+}
+.peer {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+  }
+
+  .tabs {
+    background: rgb(240, 242, 245);
+    margin: -25px -24px 24px -24px;
+    .tabChildren {
+      padding: 24px 24px 0 24px;
+    }
+    :global {
+      .ant-tabs-nav-wrap {
+        background: #fff !important;
+        padding-left: 19px;
+      }
+      .ant-tabs-bar {
+        margin: 0;
+      }
+    }
+  }
+
+  .blockListTable {
+    background: #fff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-top: 3px solid #00c0ef;
+    border-radius: 3px;
+    .blockTitle {
+      border-bottom: 1px solid #f4f4f4;
+      padding: 10px;
+      font-size: 18px;
+    }
+  }

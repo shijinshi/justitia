@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.ContainerMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    <id column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <id column="container_id" property="containerId" jdbcType="VARCHAR" />
+    <result column="container_name" property="containerName" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="working_dir" property="workingDir" jdbcType="VARCHAR" />
+    <result column="network_mode" property="networkMode" jdbcType="VARCHAR" />
+    <result column="exposed_port" property="exposedPort" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.Container" extends="BaseResultMap" >
+    <result column="volumes" property="volumes" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    host_name, container_id, container_name, image, tag, working_dir, network_mode, exposed_port, 
+    status
+  </sql>
+  <sql id="Blob_Column_List" >
+    volumes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from container
+    where host_name = #{hostName,jdbcType=VARCHAR}
+      and container_id = #{containerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from container
+    where host_name = #{hostName,jdbcType=VARCHAR}
+      and container_id = #{containerId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    insert into container (host_name, container_id, container_name, 
+      image, tag, working_dir, 
+      network_mode, exposed_port, status, 
+      volumes)
+    values (#{hostName,jdbcType=VARCHAR}, #{containerId,jdbcType=VARCHAR}, #{containerName,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{workingDir,jdbcType=VARCHAR}, 
+      #{networkMode,jdbcType=VARCHAR}, #{exposedPort,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{volumes,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    insert into container
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="containerId != null" >
+        container_id,
+      </if>
+      <if test="containerName != null" >
+        container_name,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="workingDir != null" >
+        working_dir,
+      </if>
+      <if test="networkMode != null" >
+        network_mode,
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="volumes != null" >
+        volumes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="containerName != null" >
+        #{containerName,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="workingDir != null" >
+        #{workingDir,jdbcType=VARCHAR},
+      </if>
+      <if test="networkMode != null" >
+        #{networkMode,jdbcType=VARCHAR},
+      </if>
+      <if test="exposedPort != null" >
+        #{exposedPort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="volumes != null" >
+        #{volumes,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    update container
+    <set >
+      <if test="containerName != null" >
+        container_name = #{containerName,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="workingDir != null" >
+        working_dir = #{workingDir,jdbcType=VARCHAR},
+      </if>
+      <if test="networkMode != null" >
+        network_mode = #{networkMode,jdbcType=VARCHAR},
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port = #{exposedPort,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="volumes != null" >
+        volumes = #{volumes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where host_name = #{hostName,jdbcType=VARCHAR}
+      and container_id = #{containerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    update container
+    set container_name = #{containerName,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      working_dir = #{workingDir,jdbcType=VARCHAR},
+      network_mode = #{networkMode,jdbcType=VARCHAR},
+      exposed_port = #{exposedPort,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      volumes = #{volumes,jdbcType=LONGVARCHAR}
+    where host_name = #{hostName,jdbcType=VARCHAR}
+      and container_id = #{containerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.Container" >
+    update container
+    set container_name = #{containerName,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      working_dir = #{workingDir,jdbcType=VARCHAR},
+      network_mode = #{networkMode,jdbcType=VARCHAR},
+      exposed_port = #{exposedPort,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where host_name = #{hostName,jdbcType=VARCHAR}
+      and container_id = #{containerId,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+  <select id="selectCaContainer" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from container
+    where container_id in (select container_id from fabric_ca_server where server_name = #{serverName,jdbcType=VARCHAR})
+  </select>
+</mapper>

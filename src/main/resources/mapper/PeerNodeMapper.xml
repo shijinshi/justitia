@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.PeerNodeMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.PeerNode" >
+    <id column="peer_name" property="peerName" jdbcType="VARCHAR" />
+    <result column="server_port" property="serverPort" jdbcType="INTEGER" />
+    <result column="ca_server_name" property="caServerName" jdbcType="VARCHAR" />
+    <result column="ca_peer_user" property="caPeerUser" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="container_id" property="containerId" jdbcType="VARCHAR" />
+    <result column="couchdb_enable" property="couchdbEnable" jdbcType="BIT" />
+    <result column="couchdb_name" property="couchdbName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    peer_name, server_port, ca_server_name, ca_peer_user, creator, host_name, container_id, 
+    couchdb_enable, couchdb_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from peer_node
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from peer_node
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerNode" >
+    insert into peer_node (peer_name, server_port, ca_server_name, 
+      ca_peer_user, creator, host_name, 
+      container_id, couchdb_enable, couchdb_name
+      )
+    values (#{peerName,jdbcType=VARCHAR}, #{serverPort,jdbcType=INTEGER}, #{caServerName,jdbcType=VARCHAR},
+      #{caPeerUser,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, 
+      #{containerId,jdbcType=VARCHAR}, #{couchdbEnable,jdbcType=BIT}, #{couchdbName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerNode" >
+    insert into peer_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="peerName != null" >
+        peer_name,
+      </if>
+      <if test="serverPort != null" >
+        server_port,
+      </if>
+      <if test="caServerName != null" >
+        ca_server_name,
+      </if>
+      <if test="caPeerUser != null" >
+        ca_peer_user,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="containerId != null" >
+        container_id,
+      </if>
+      <if test="couchdbEnable != null" >
+        couchdb_enable,
+      </if>
+      <if test="couchdbName != null" >
+        couchdb_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="peerName != null" >
+        #{peerName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null" >
+        #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="caServerName != null" >
+        #{caServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="caPeerUser != null" >
+        #{caPeerUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="couchdbEnable != null" >
+        #{couchdbEnable,jdbcType=BIT},
+      </if>
+      <if test="couchdbName != null" >
+        #{couchdbName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerNode" >
+    update peer_node
+    <set >
+      <if test="serverPort != null" >
+        server_port = #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="caServerName != null" >
+        ca_server_name = #{caServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="caPeerUser != null" >
+        ca_peer_user = #{caPeerUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        container_id = #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="couchdbEnable != null" >
+        couchdb_enable = #{couchdbEnable,jdbcType=BIT},
+      </if>
+      <if test="couchdbName != null" >
+        couchdb_name = #{couchdbName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerNode" >
+    update peer_node
+    set server_port = #{serverPort,jdbcType=INTEGER},
+      ca_server_name = #{caServerName,jdbcType=VARCHAR},
+      ca_peer_user = #{caPeerUser,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      container_id = #{containerId,jdbcType=VARCHAR},
+      couchdb_enable = #{couchdbEnable,jdbcType=BIT},
+      couchdb_name = #{couchdbName,jdbcType=VARCHAR}
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+  <resultMap id="PeerAndContainer" type="cn.shijinshi.fabricmanager.dao.entity.PeerAndContainer" extends="BaseResultMap" >
+    <result column="container_name" property="containerName" jdbcType="VARCHAR" />
+    <result column="network_mode" property="networkMode" jdbcType="VARCHAR" />
+    <result column="exposed_port" property="exposedPort" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectAllPeer" resultMap="PeerAndContainer" >
+    select
+    A.*, B.container_name, B.network_mode, B.exposed_port
+    from peer_node A left join container B
+    on B.host_name = A.host_name and B.container_id = A.container_id
+  </select>
+
+
+  <resultMap id="PeerInfo" type="cn.shijinshi.fabricmanager.dao.entity.PeerInfo">
+    <id column="peer_name" property="peerName" jdbcType="VARCHAR" />
+    <result column="server_port" property="serverPort" jdbcType="INTEGER" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="tls_enable" property="tlsEnable" jdbcType="BIT" />
+    <result column="tls_cert" property="tlsCert" jdbcType="LONGVARCHAR" />
+    <result column="exposed_port" property="exposedPort" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectPeerInfo" resultMap="PeerInfo" >
+    SELECT A.peer_name, A.server_port, B.ip, C.tls_enable, C.tls_cert, D.exposed_port FROM `peer_node` A
+    left join `host` B on A.host_name = B.host_name
+    left join fabric_ca_user C on A.ca_peer_user = C.user_id and A.ca_server_name = C.server_name
+    left join container D on A.host_name = D.host_name and A.container_id = D.container_id
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllPeerInfo" resultMap="PeerInfo" >
+    SELECT A.peer_name, A.server_port, B.ip, C.tls_enable, C.tls_cert, D.exposed_port FROM `peer_node` A
+    left join `host` B on A.host_name = B.host_name
+    left join fabric_ca_user C on A.ca_peer_user = C.user_id and A.ca_server_name = C.server_name
+    left join container D on A.host_name = D.host_name and A.container_id = D.container_id
+  </select>
+
+  <select id="selectPeerByCaUser" resultType="java.lang.String">
+    select
+    peer_name
+    from peer_node
+    where ca_server_name = #{caServerName,jdbcType=VARCHAR}
+    and ca_peer_user = #{caPeerUser,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllPeerName" resultType="java.lang.String">
+    select
+    peer_name
+    from peer_node
+  </select>
+</mapper>

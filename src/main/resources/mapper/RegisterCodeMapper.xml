@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.RegisterCodeMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.RegisterCode" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="generate_date" property="generateDate" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    code, owner, generate_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from register_code
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from register_code
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.RegisterCode" >
+    insert into register_code (code, owner, generate_date
+      )
+    values (#{code,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{generateDate,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.RegisterCode" >
+    insert into register_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="owner != null" >
+        owner,
+      </if>
+      <if test="generateDate != null" >
+        generate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null" >
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="generateDate != null" >
+        #{generateDate,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.RegisterCode" >
+    update register_code
+    <set >
+      <if test="owner != null" >
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="generateDate != null" >
+        generate_date = #{generateDate,jdbcType=BIGINT},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.RegisterCode" >
+    update register_code
+    set owner = #{owner,jdbcType=VARCHAR},
+      generate_date = #{generateDate,jdbcType=BIGINT}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+  <delete id="delOverdueCode" parameterType="java.lang.Long">
+    delete from register_code
+    where generate_date &lt; #{time,jdbcType=BIGINT}
+  </delete>
+
+  <select id="findAffiliationByCode" parameterType="java.lang.String" resultType="java.lang.String">
+    select affiliation
+    from user
+    where user_id in (select owner
+    from register_code
+    where code = #{code,jdbcType=VARCHAR}
+    )
+  </select>
+</mapper>

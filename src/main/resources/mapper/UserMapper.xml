@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.User" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="affiliation" property="affiliation" jdbcType="VARCHAR" />
+    <result column="register_date" property="registerDate" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.User" extends="BaseResultMap" >
+    <result column="token" property="token" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, password, identity, affiliation, register_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    token
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.User" >
+    insert into user (user_id, user_name, password, 
+      identity, affiliation, register_date, 
+      token)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{identity,jdbcType=VARCHAR}, #{affiliation,jdbcType=VARCHAR}, #{registerDate,jdbcType=BIGINT}, 
+      #{token,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="identity != null" >
+        identity,
+      </if>
+      <if test="affiliation != null" >
+        affiliation,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null" >
+        #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=BIGINT},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null" >
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null" >
+        affiliation = #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=BIGINT},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      affiliation = #{affiliation,jdbcType=VARCHAR},
+      register_date = #{registerDate,jdbcType=BIGINT},
+      token = #{token,jdbcType=LONGVARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      affiliation = #{affiliation,jdbcType=VARCHAR},
+      register_date = #{registerDate,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+
+  <select id="selectUserCount" resultType="java.lang.Integer">
+    select COUNT (user_id) from user
+  </select>
+
+  <select id="getUsersByAffiliation" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    user_id,user_name, identity, affiliation
+    from user
+    where affiliation like #{affiliation,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateToken" >
+    update user set
+    token = #{token,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateUserName" >
+    update user set
+    user_name = #{userName,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

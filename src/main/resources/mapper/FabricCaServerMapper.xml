@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.FabricCaServerMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    <id column="server_name" property="serverName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="container_id" property="containerId" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="exposed_port" property="exposedPort" jdbcType="INTEGER" />
+    <result column="home" property="home" jdbcType="VARCHAR" />
+    <result column="parent_server" property="parentServer" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="tls_enable" property="tlsEnable" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" extends="BaseResultMap" >
+    <result column="affiliations" property="affiliations" jdbcType="LONGVARCHAR" />
+    <result column="tls_ca" property="tlsCa" jdbcType="LONGVARCHAR" />
+    <result column="tls_server_cert" property="tlsServerCert" jdbcType="LONGVARCHAR" />
+    <result column="tls_server_key" property="tlsServerKey" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    server_name, creator, host_name, container_id, port, exposed_port, home, parent_server, 
+    type, tls_enable
+  </sql>
+  <sql id="Blob_Column_List" >
+    affiliations, tls_ca, tls_server_cert, tls_server_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fabric_ca_server
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fabric_ca_server
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    insert into fabric_ca_server (server_name, creator, host_name, 
+      container_id, port, exposed_port, 
+      home, parent_server, type, 
+      tls_enable, affiliations, tls_ca, 
+      tls_server_cert, tls_server_key)
+    values (#{serverName,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, 
+      #{containerId,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER}, #{exposedPort,jdbcType=INTEGER}, 
+      #{home,jdbcType=VARCHAR}, #{parentServer,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{tlsEnable,jdbcType=BIT}, #{affiliations,jdbcType=LONGVARCHAR}, #{tlsCa,jdbcType=LONGVARCHAR}, 
+      #{tlsServerCert,jdbcType=LONGVARCHAR}, #{tlsServerKey,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    insert into fabric_ca_server
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serverName != null" >
+        server_name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="containerId != null" >
+        container_id,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port,
+      </if>
+      <if test="home != null" >
+        home,
+      </if>
+      <if test="parentServer != null" >
+        parent_server,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable,
+      </if>
+      <if test="affiliations != null" >
+        affiliations,
+      </if>
+      <if test="tlsCa != null" >
+        tls_ca,
+      </if>
+      <if test="tlsServerCert != null" >
+        tls_server_cert,
+      </if>
+      <if test="tlsServerKey != null" >
+        tls_server_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serverName != null" >
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="exposedPort != null" >
+        #{exposedPort,jdbcType=INTEGER},
+      </if>
+      <if test="home != null" >
+        #{home,jdbcType=VARCHAR},
+      </if>
+      <if test="parentServer != null" >
+        #{parentServer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="affiliations != null" >
+        #{affiliations,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCa != null" >
+        #{tlsCa,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsServerCert != null" >
+        #{tlsServerCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsServerKey != null" >
+        #{tlsServerKey,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    update fabric_ca_server
+    <set >
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        container_id = #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port = #{exposedPort,jdbcType=INTEGER},
+      </if>
+      <if test="home != null" >
+        home = #{home,jdbcType=VARCHAR},
+      </if>
+      <if test="parentServer != null" >
+        parent_server = #{parentServer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="tlsEnable != null" >
+        tls_enable = #{tlsEnable,jdbcType=BIT},
+      </if>
+      <if test="affiliations != null" >
+        affiliations = #{affiliations,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsCa != null" >
+        tls_ca = #{tlsCa,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsServerCert != null" >
+        tls_server_cert = #{tlsServerCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tlsServerKey != null" >
+        tls_server_key = #{tlsServerKey,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    update fabric_ca_server
+    set creator = #{creator,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      container_id = #{containerId,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      exposed_port = #{exposedPort,jdbcType=INTEGER},
+      home = #{home,jdbcType=VARCHAR},
+      parent_server = #{parentServer,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT},
+      affiliations = #{affiliations,jdbcType=LONGVARCHAR},
+      tls_ca = #{tlsCa,jdbcType=LONGVARCHAR},
+      tls_server_cert = #{tlsServerCert,jdbcType=LONGVARCHAR},
+      tls_server_key = #{tlsServerKey,jdbcType=LONGVARCHAR}
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.FabricCaServer" >
+    update fabric_ca_server
+    set creator = #{creator,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      container_id = #{containerId,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      exposed_port = #{exposedPort,jdbcType=INTEGER},
+      home = #{home,jdbcType=VARCHAR},
+      parent_server = #{parentServer,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      tls_enable = #{tlsEnable,jdbcType=BIT}
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+  <select id="selectAllServer" resultMap="ResultMapWithBLOBs"  >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fabric_ca_server
+  </select>
+
+  <delete id="deleteServerByParent" parameterType="java.lang.String" >
+    delete from fabric_ca_server
+    where  parent_server = #{parentServer,jdbcType=LONGVARCHAR}
+  </delete>
+
+  <delete id="deleteServerContainer" parameterType="java.lang.String" >
+    delete from container
+    where host_name in (select host_name from fabric_ca_server where server_name = #{serverName,jdbcType=VARCHAR})
+    and container_id in (select container_id from fabric_ca_server where server_name = #{serverName,jdbcType=VARCHAR})
+  </delete>
+
+  <select id="selectByType" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from fabric_ca_server
+    where type = #{type,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectCAByParent" resultType="java.lang.String" parameterType="java.lang.String" >
+    select server_name
+    from fabric_ca_server
+    where parent_server like #{parentServer,jdbcType=LONGVARCHAR}
+  </select>
+
+
+  <update id="updateAffiliations">
+    update fabric_ca_server
+    set affiliations = #{affiliations,jdbcType=LONGVARCHAR}
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+</mapper>

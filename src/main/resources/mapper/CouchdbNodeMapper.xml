@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.CouchdbNodeMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.CouchdbNode" >
+    <id column="couchdb_name" property="couchdbName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="container_id" property="containerId" jdbcType="VARCHAR" />
+    <result column="peer_name" property="peerName" jdbcType="VARCHAR" />
+    <result column="port" property="port" jdbcType="INTEGER" />
+    <result column="exposed_port" property="exposedPort" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    couchdb_name, creator, host_name, container_id, peer_name, port, exposed_port
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from couchdb_node
+    where couchdb_name = #{couchdbName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from couchdb_node
+    where couchdb_name = #{couchdbName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.CouchdbNode" >
+    insert into couchdb_node (couchdb_name, creator, host_name, 
+      container_id, peer_name, port, 
+      exposed_port)
+    values (#{couchdbName,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, 
+      #{containerId,jdbcType=VARCHAR}, #{peerName,jdbcType=VARCHAR}, #{port,jdbcType=INTEGER},
+      #{exposedPort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.CouchdbNode" >
+    insert into couchdb_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="couchdbName != null" >
+        couchdb_name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="containerId != null" >
+        container_id,
+      </if>
+      <if test="peerName != null" >
+        peer_name,
+      </if>
+      <if test="port != null" >
+        port,
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="couchdbName != null" >
+        #{couchdbName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="peerName != null" >
+        #{peerName,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="exposedPort != null" >
+        #{exposedPort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.CouchdbNode" >
+    update couchdb_node
+    <set >
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        container_id = #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="peerName != null" >
+        peer_name = #{peerName,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null" >
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="exposedPort != null" >
+        exposed_port = #{exposedPort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where couchdb_name = #{couchdbName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.CouchdbNode" >
+    update couchdb_node
+    set creator = #{creator,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      container_id = #{containerId,jdbcType=VARCHAR},
+      peer_name = #{peerName,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      exposed_port = #{exposedPort,jdbcType=INTEGER}
+    where couchdb_name = #{couchdbName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+  <select id="selectAllCouchdb" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from couchdb_node
+  </select>
+</mapper>
