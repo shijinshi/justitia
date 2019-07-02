@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.ChannelConfigTaskMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    <id column="request_id" property="requestId" jdbcType="VARCHAR" />
+    <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+    <result column="requester" property="requester" jdbcType="VARCHAR" />
+    <result column="channel_config_version" property="channelConfigVersion" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="request_time" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="request_type" property="requestType" jdbcType="VARCHAR" />
+    <result column="reject" property="reject" jdbcType="BIT" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="response_time" property="responseTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARBINARY" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="expected_endorsement" property="expectedEndorsement" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    request_id, channel_id, requester, channel_config_version, status, request_time, 
+    request_type, reject, reason, response_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, description, expected_endorsement
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel_config_task
+    where request_id = #{requestId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from channel_config_task
+    where request_id = #{requestId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    insert into channel_config_task (request_id, channel_id, requester, 
+      channel_config_version, status, request_time, 
+      request_type, reject, reason, 
+      response_time, content, description, 
+      expected_endorsement)
+    values (#{requestId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, #{requester,jdbcType=VARCHAR}, 
+      #{channelConfigVersion,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{requestTime,jdbcType=TIMESTAMP}, 
+      #{requestType,jdbcType=VARCHAR}, #{reject,jdbcType=BIT}, #{reason,jdbcType=VARCHAR}, 
+      #{responseTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}, #{description,jdbcType=LONGVARCHAR}, 
+      #{expectedEndorsement,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    insert into channel_config_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="requestId != null" >
+        request_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="requester != null" >
+        requester,
+      </if>
+      <if test="channelConfigVersion != null" >
+        channel_config_version,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="requestTime != null" >
+        request_time,
+      </if>
+      <if test="requestType != null" >
+        request_type,
+      </if>
+      <if test="reject != null" >
+        reject,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="responseTime != null" >
+        response_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="expectedEndorsement != null" >
+        expected_endorsement,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="requestId != null" >
+        #{requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="requester != null" >
+        #{requester,jdbcType=VARCHAR},
+      </if>
+      <if test="channelConfigVersion != null" >
+        #{channelConfigVersion,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestType != null" >
+        #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="reject != null" >
+        #{reject,jdbcType=BIT},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="responseTime != null" >
+        #{responseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expectedEndorsement != null" >
+        #{expectedEndorsement,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    update channel_config_task
+    <set >
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="requester != null" >
+        requester = #{requester,jdbcType=VARCHAR},
+      </if>
+      <if test="channelConfigVersion != null" >
+        channel_config_version = #{channelConfigVersion,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        request_time = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestType != null" >
+        request_type = #{requestType,jdbcType=VARCHAR},
+      </if>
+      <if test="reject != null" >
+        reject = #{reject,jdbcType=BIT},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="responseTime != null" >
+        response_time = #{responseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expectedEndorsement != null" >
+        expected_endorsement = #{expectedEndorsement,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where request_id = #{requestId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    update channel_config_task
+    set channel_id = #{channelId,jdbcType=VARCHAR},
+      requester = #{requester,jdbcType=VARCHAR},
+      channel_config_version = #{channelConfigVersion,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      reject = #{reject,jdbcType=BIT},
+      reason = #{reason,jdbcType=VARCHAR},
+      response_time = #{responseTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARBINARY},
+      description = #{description,jdbcType=LONGVARCHAR},
+      expected_endorsement = #{expectedEndorsement,jdbcType=LONGVARCHAR}
+    where request_id = #{requestId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.ChannelConfigTask" >
+    update channel_config_task
+    set channel_id = #{channelId,jdbcType=VARCHAR},
+      requester = #{requester,jdbcType=VARCHAR},
+      channel_config_version = #{channelConfigVersion,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      request_type = #{requestType,jdbcType=VARCHAR},
+      reject = #{reject,jdbcType=BIT},
+      reason = #{reason,jdbcType=VARCHAR},
+      response_time = #{responseTime,jdbcType=TIMESTAMP}
+    where request_id = #{requestId,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+  <select id="selectChannelConfigTask" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel_config_task
+  </select>
+
+
+  <update id="updateStatus" parameterType="java.lang.String" >
+        update channel_config_task
+        set status = #{status,jdbcType=VARCHAR}
+        where request_id = #{requestId,jdbcType=VARCHAR}
+</update>
+
+
+  <update id="updateResponse">
+        update channel_config_task
+        set status = 'end',
+        reason = #{reason,jdbcType=VARCHAR},
+        reject = #{reject,jdbcType=BIT},
+        response_time = #{responseTime,jdbcType=TIMESTAMP}
+        where request_id = #{requestId,jdbcType=VARCHAR}
+</update>
+
+
+  <select id="selectMySigningTaskByChannel" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel_config_task
+    where requester = #{requester,jdbcType=VARCHAR} and channel_id = #{channelId,jdbcType=VARCHAR}
+  </select>
+</mapper>

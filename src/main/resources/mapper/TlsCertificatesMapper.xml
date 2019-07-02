@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.TlsCertificatesMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" >
+    <id column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" extends="BaseResultMap" >
+    <result column="cert_pem" property="certPem" jdbcType="LONGVARCHAR" />
+    <result column="key_pem" property="keyPem" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serial_number
+  </sql>
+  <sql id="Blob_Column_List" >
+    cert_pem, key_pem
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tls_certificates
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tls_certificates
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" >
+    insert into tls_certificates (serial_number, cert_pem, key_pem
+      )
+    values (#{serialNumber,jdbcType=VARCHAR}, #{certPem,jdbcType=LONGVARCHAR}, #{keyPem,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" >
+    insert into tls_certificates
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="certPem != null" >
+        cert_pem,
+      </if>
+      <if test="keyPem != null" >
+        key_pem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="certPem != null" >
+        #{certPem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyPem != null" >
+        #{keyPem,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" >
+    update tls_certificates
+    <set >
+      <if test="certPem != null" >
+        cert_pem = #{certPem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyPem != null" >
+        key_pem = #{keyPem,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.TlsCertificates" >
+    update tls_certificates
+    set cert_pem = #{certPem,jdbcType=LONGVARCHAR},
+      key_pem = #{keyPem,jdbcType=LONGVARCHAR}
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+  </update>
+</mapper>

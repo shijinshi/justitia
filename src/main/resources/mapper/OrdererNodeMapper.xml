@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.OrdererNodeMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.OrdererNode" >
+    <id column="orderer_name" property="ordererName" jdbcType="VARCHAR" />
+    <result column="server_port" property="serverPort" jdbcType="INTEGER" />
+    <result column="ca_server_name" property="caServerName" jdbcType="VARCHAR" />
+    <result column="ca_orderer_user" property="caOrdererUser" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="container_id" property="containerId" jdbcType="VARCHAR" />
+    <result column="system_chain" property="systemChain" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    orderer_name, server_port, ca_server_name, ca_orderer_user, creator, host_name, container_id, 
+    system_chain
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderer_node
+    where orderer_name = #{ordererName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orderer_node
+    where orderer_name = #{ordererName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrdererNode" >
+    insert into orderer_node (orderer_name, server_port, ca_server_name, 
+      ca_orderer_user, creator, host_name, 
+      container_id, system_chain)
+    values (#{ordererName,jdbcType=VARCHAR}, #{serverPort,jdbcType=INTEGER}, #{caServerName,jdbcType=VARCHAR}, 
+      #{caOrdererUser,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, 
+      #{containerId,jdbcType=VARCHAR}, #{systemChain,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrdererNode" >
+    insert into orderer_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ordererName != null" >
+        orderer_name,
+      </if>
+      <if test="serverPort != null" >
+        server_port,
+      </if>
+      <if test="caServerName != null" >
+        ca_server_name,
+      </if>
+      <if test="caOrdererUser != null" >
+        ca_orderer_user,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="containerId != null" >
+        container_id,
+      </if>
+      <if test="systemChain != null" >
+        system_chain,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ordererName != null" >
+        #{ordererName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null" >
+        #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="caServerName != null" >
+        #{caServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="caOrdererUser != null" >
+        #{caOrdererUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemChain != null" >
+        #{systemChain,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrdererNode" >
+    update orderer_node
+    <set >
+      <if test="serverPort != null" >
+        server_port = #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="caServerName != null" >
+        ca_server_name = #{caServerName,jdbcType=VARCHAR},
+      </if>
+      <if test="caOrdererUser != null" >
+        ca_orderer_user = #{caOrdererUser,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="containerId != null" >
+        container_id = #{containerId,jdbcType=VARCHAR},
+      </if>
+      <if test="systemChain != null" >
+        system_chain = #{systemChain,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderer_name = #{ordererName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrdererNode" >
+    update orderer_node
+    set server_port = #{serverPort,jdbcType=INTEGER},
+      ca_server_name = #{caServerName,jdbcType=VARCHAR},
+      ca_orderer_user = #{caOrdererUser,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      container_id = #{containerId,jdbcType=VARCHAR},
+      system_chain = #{systemChain,jdbcType=VARCHAR}
+    where orderer_name = #{ordererName,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="OrdererAndContainer" type="cn.shijinshi.fabricmanager.dao.entity.OrdererAndContainer" extends="BaseResultMap" >
+    <result column="container_name" property="containerName" jdbcType="VARCHAR" />
+    <result column="network_mode" property="networkMode" jdbcType="VARCHAR" />
+    <result column="exposed_port" property="exposedPort" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectAllOrderer" resultMap="OrdererAndContainer">
+        select
+        A.*, B.container_name, B.network_mode, B.exposed_port
+        from orderer_node A left join container B
+        on B.host_name = A.host_name and B.container_id = A.container_id
+</select>
+
+
+  <select id="selectOrdererByCaUser" resultType="java.lang.String">
+        select
+        orderer_name
+        from orderer_node
+        where ca_server_name = #{caServerName,jdbcType=VARCHAR}
+        and ca_orderer_user = #{caOrdererUser,jdbcType=VARCHAR}
+</select>
+
+
+
+  <resultMap id="OrdererInfo" type="cn.shijinshi.fabricmanager.dao.entity.OrdererInfo">
+    <id column="orderer_name" property="ordererName" jdbcType="VARCHAR" />
+    <result column="server_port" property="serverPort" jdbcType="INTEGER" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="tls_enable" property="tlsEnable" jdbcType="BIT" />
+    <result column="tls_cert" property="tlsCert" jdbcType="LONGVARCHAR" />
+    <result column="exposed_port" property="exposedPort" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectOrdererInfo" resultMap="OrdererInfo" >
+        SELECT
+        A.orderer_name,
+        A.server_port,
+        B.ip,
+        C.tls_enable,
+        C.tls_cert,
+        D.exposed_port
+        FROM `orderer_node` A
+        LEFT JOIN `host` B ON A.host_name = B.host_name
+        LEFT JOIN fabric_ca_user C ON A.ca_orderer_user = C.user_id
+        AND A.ca_server_name = C.server_name
+        LEFT JOIN container D ON A.host_name = D.host_name
+        AND A.container_id = D.container_id
+</select>
+</mapper>

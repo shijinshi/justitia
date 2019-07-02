@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.CertificatesMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    <id column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    <id column="authority_key_identifier" property="authorityKeyIdentifier" jdbcType="VARCHAR" />
+    <result column="ca_user_id" property="caUserId" jdbcType="VARCHAR" />
+    <result column="server_name" property="serverName" jdbcType="VARCHAR" />
+    <result column="not_before" property="notBefore" jdbcType="TIMESTAMP" />
+    <result column="not_after" property="notAfter" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.Certificates" extends="BaseResultMap" >
+    <result column="cert_pem" property="certPem" jdbcType="LONGVARCHAR" />
+    <result column="key_pem" property="keyPem" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    serial_number, authority_key_identifier, ca_user_id, server_name, not_before, not_after, 
+    state
+  </sql>
+  <sql id="Blob_Column_List" >
+    cert_pem, key_pem
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from certificates
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+      and authority_key_identifier = #{authorityKeyIdentifier,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from certificates
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+      and authority_key_identifier = #{authorityKeyIdentifier,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    insert into certificates (serial_number, authority_key_identifier, 
+      ca_user_id, server_name, not_before, 
+      not_after, state, cert_pem, 
+      key_pem)
+    values (#{serialNumber,jdbcType=VARCHAR}, #{authorityKeyIdentifier,jdbcType=VARCHAR}, 
+      #{caUserId,jdbcType=VARCHAR}, #{serverName,jdbcType=VARCHAR}, #{notBefore,jdbcType=TIMESTAMP}, 
+      #{notAfter,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{certPem,jdbcType=LONGVARCHAR}, 
+      #{keyPem,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    insert into certificates
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        serial_number,
+      </if>
+      <if test="authorityKeyIdentifier != null" >
+        authority_key_identifier,
+      </if>
+      <if test="caUserId != null" >
+        ca_user_id,
+      </if>
+      <if test="serverName != null" >
+        server_name,
+      </if>
+      <if test="notBefore != null" >
+        not_before,
+      </if>
+      <if test="notAfter != null" >
+        not_after,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="certPem != null" >
+        cert_pem,
+      </if>
+      <if test="keyPem != null" >
+        key_pem,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="authorityKeyIdentifier != null" >
+        #{authorityKeyIdentifier,jdbcType=VARCHAR},
+      </if>
+      <if test="caUserId != null" >
+        #{caUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="notBefore != null" >
+        #{notBefore,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notAfter != null" >
+        #{notAfter,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="certPem != null" >
+        #{certPem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyPem != null" >
+        #{keyPem,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    update certificates
+    <set >
+      <if test="caUserId != null" >
+        ca_user_id = #{caUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        server_name = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="notBefore != null" >
+        not_before = #{notBefore,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notAfter != null" >
+        not_after = #{notAfter,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="certPem != null" >
+        cert_pem = #{certPem,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keyPem != null" >
+        key_pem = #{keyPem,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+      and authority_key_identifier = #{authorityKeyIdentifier,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    update certificates
+    set ca_user_id = #{caUserId,jdbcType=VARCHAR},
+      server_name = #{serverName,jdbcType=VARCHAR},
+      not_before = #{notBefore,jdbcType=TIMESTAMP},
+      not_after = #{notAfter,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      cert_pem = #{certPem,jdbcType=LONGVARCHAR},
+      key_pem = #{keyPem,jdbcType=LONGVARCHAR}
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+      and authority_key_identifier = #{authorityKeyIdentifier,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.shijinshi.fabricmanager.dao.entity.Certificates" >
+    update certificates
+    set ca_user_id = #{caUserId,jdbcType=VARCHAR},
+      server_name = #{serverName,jdbcType=VARCHAR},
+      not_before = #{notBefore,jdbcType=TIMESTAMP},
+      not_after = #{notAfter,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR}
+    where serial_number = #{serialNumber,jdbcType=VARCHAR}
+      and authority_key_identifier = #{authorityKeyIdentifier,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+
+
+
+
+
+
+
+  <delete id="deleteCertByCaUser" parameterType="java.lang.String" >
+    delete from certificates
+    where ca_user_id = #{caUserId,jdbcType=VARCHAR}
+    and server_name = #{serverName,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteCertByCaServer" parameterType="java.lang.String" >
+    delete from certificates
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </delete>
+
+
+  <select id="selectCertByUser" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from certificates
+    where ca_user_id = #{caUserId,jdbcType=VARCHAR}
+    and server_name = #{serverName,jdbcType=VARCHAR}
+  </select>
+</mapper>

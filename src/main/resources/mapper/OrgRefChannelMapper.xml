@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.OrgRefChannelMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" >
+    <id column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <id column="org_msp" property="orgMsp" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" extends="BaseResultMap" >
+    <result column="anchor_peers" property="anchorPeers" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    channel_name, org_msp
+  </sql>
+  <sql id="Blob_Column_List" >
+    anchor_peers
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from org_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+      and org_msp = #{orgMsp,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from org_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+      and org_msp = #{orgMsp,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" >
+    insert into org_ref_channel (channel_name, org_msp, anchor_peers
+      )
+    values (#{channelName,jdbcType=VARCHAR}, #{orgMsp,jdbcType=VARCHAR}, #{anchorPeers,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" >
+    insert into org_ref_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelName != null" >
+        channel_name,
+      </if>
+      <if test="orgMsp != null" >
+        org_msp,
+      </if>
+      <if test="anchorPeers != null" >
+        anchor_peers,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgMsp != null" >
+        #{orgMsp,jdbcType=VARCHAR},
+      </if>
+      <if test="anchorPeers != null" >
+        #{anchorPeers,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" >
+    update org_ref_channel
+    <set >
+      <if test="anchorPeers != null" >
+        anchor_peers = #{anchorPeers,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+      and org_msp = #{orgMsp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.shijinshi.fabricmanager.dao.entity.OrgRefChannel" >
+    update org_ref_channel
+    set anchor_peers = #{anchorPeers,jdbcType=LONGVARCHAR}
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+      and org_msp = #{orgMsp,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+  <select id="selectAllOrgRefChannel" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from org_ref_channel
+  </select>
+
+
+  <select id="selectOrgRefChannelByChannel" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from org_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteOrgRefChannelByOrg" parameterType="java.lang.String" >
+    delete from org_ref_channel
+    where org_msp = #{orgMsp,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteOrgRefChannelByChannel" parameterType="java.lang.String" >
+    delete from org_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+  </delete>
+</mapper>

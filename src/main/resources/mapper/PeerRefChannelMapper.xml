@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.shijinshi.fabricmanager.dao.mapper.PeerRefChannelMapper" >
+  <resultMap id="BaseResultMap" type="cn.shijinshi.fabricmanager.dao.entity.PeerRefChannel" >
+    <id column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <id column="peer_name" property="peerName" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from peer_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+      and peer_name = #{peerName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerRefChannel" >
+    insert into peer_ref_channel (channel_name, peer_name)
+    values (#{channelName,jdbcType=VARCHAR}, #{peerName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.shijinshi.fabricmanager.dao.entity.PeerRefChannel" >
+    insert into peer_ref_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelName != null" >
+        channel_name,
+      </if>
+      <if test="peerName != null" >
+        peer_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="peerName != null" >
+        #{peerName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+
+
+
+  <select id="selectAllPeerRefChannel" resultMap="BaseResultMap" >
+    select *
+    from peer_ref_channel
+  </select>
+
+
+  <select id="selectPeerRefChannelBuChannel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from peer_ref_channel
+    where channel_name = #{channelName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAllChannelName" resultType="java.lang.String" >
+    select channel_name
+    from peer_ref_channel
+  </select>
+
+
+  <delete id="deleteByPeer" parameterType="java.lang.String" >
+    delete from peer_ref_channel
+    where peer_name = #{peerName,jdbcType=VARCHAR}
+  </delete>
+</mapper>
