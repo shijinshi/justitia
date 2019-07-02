@@ -48,29 +48,3 @@ vi /lib/systemd/system/docker.service
 4. 修改jar包中application.yaml配置文件中数据库连接配置和服务端口（可在打包前完成）  
 5. 运行jar  
 本项目必须运行在linux系统上
-
-## 系统测试
-    系统测试后续添加
-
-## 等待改进
-1. 交易提交给orderer节点等待返回结果，在默认30秒的情况下很可能无法得到结果而超时，超时情况下异常处理有待完善  
-`建议：`将交易提交部分独立成一个单独的部分，前端不等待这个交易最终是否生效的结论。后端也不等待这个返回的结果，而是通过解析监听到
-的区块去判断这个交易最终是否生效  
-2. 部署peer节点时CORE_PEER_GOSSIP_BOOTSTRAP环境变量涉及到组织内节点组网，将其配置进行改进不再使用默认地址
-3. 提供组织配置锚节点的交互界面
-4. 组织信息配置以后更改很不方便
-5. 通道上注册监听，如果某一个peer节点挂掉了，会无限的输出warn级别日志信息
-    
-## Built With
-* [java](https://rometools.github.io/rome/) - The language used
-* [Spring boot](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [React](https://reactjs.org/) - Web development framework
-* [Maven](https://maven.apache.org/) - Dependency Management
-
-## Versioning
-
-## Authors
-- [刘锐](http://repos.shijinshi.cn/liurui) - Initial work
-
-## License
-Copyright @ shijinshi
