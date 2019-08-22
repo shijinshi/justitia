@@ -55,7 +55,7 @@ class UserLayout extends React.PureComponent {
           <div className={styles.top}>
             <div className={styles.header}>
                   <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>Fabric Explore</span>
+                  <span className={styles.title}>Fabric Justitia</span>
             </div>
             <div className={styles.desc}></div>
           </div>
