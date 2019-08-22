@@ -81,4 +81,4 @@ vi /lib/systemd/system/docker.service
 ![Add-member-to-channel.png](/doc/img/Add-member-to-channel.png)
 
 ## 等待完善
-当前本版的代码只是一个简单的demo，在用户友好性和功能的优化上任然有很多工作未完成，当前已知的未解决问题可查看[Issue文档](doc\Issue.md)
+当前本版的代码只是一个简单的demo，在用户友好性和功能的优化上任然有很多工作未完成，当前已知的未解决问题可查看[Issue文档](doc/Issue.md)
