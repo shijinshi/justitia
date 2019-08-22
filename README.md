@@ -15,7 +15,7 @@ fabric管理采用spring boot + React实现前后端分离。后端部分是一�
 - fabric 1.3
 
 ## 部署准备
-我们提供了预览[截图](https://github.com/shijinshi/justitia/tree/master/doc/screenshot.md)在您部署前可以查看项目现有情况，已决定要不要使用。
+我们提供了预览[截图](/doc/screenshot.md)在您部署前可以查看项目现有情况，已决定要不要使用。
 
 1. 项目运行前需要准备至少一个fabric环境配置完整的主机（或虚拟机）作为fabric节点的运行环境，环境配置需要具备以下要求
     - Docker server 1.11.x
@@ -42,7 +42,7 @@ vi /lib/systemd/system/docker.service
 #### 在Peer镜像中增加系统链码CMSCC
 由于本项目基于Fabric 1.3版本开发，在1.3版本时通道任意成员都可以实例化和升级合约致使合约的版本和内容难以保持一直。为了保证
 通道成员管理的整个审批流程不被篡改，而且该审批流程不会发生变化。多以选择将CMSCC作为系统链码部署到Peer中。  
-在Peer中增加系统链码教程可参考[系统链码开发](https://github.com/shijinshi/justitia/tree/master/doc/add-system-chaincode.md)
+在Peer中增加系统链码教程可参考[系统链码开发](/doc/add-system-chaincode.md)
 
 ## 部署
 1. 配置系统环境  
@@ -54,14 +54,14 @@ vi /lib/systemd/system/docker.service
 4. 修改jar包中application.yaml配置文件中数据库连接配置和服务端口（可在打包前完成）  
 5. 运行jar  
 本项目必须运行在linux系统上
-6. [部署前端程序](https://github.com/shijinshi/justitia/tree/master/web/README.md)
+6. [部署前端程序](/web/README.md)
 
 ## 使用说明
 在浏览器上访问nginx配置的前端地址，即可访问。
 
 ## 项目设计
 本项目使用Fabric ca管理和维护组织身份信息，借助Docker的http api维护和监控Fabric节点，通过fabric-sdk-java对fabric网络上的数据进行维护。整个项目的结构设计上分为四个部分，如下图所示。其中DB/File用于存储身份数据（包括证书和私钥）。Service定义了一些业务模块，提供给Scheduler调度。Scheduler进行身份校验，并定义了一系列REST接口；WEB通过Scheduler提供的REST接口进行数据展示和服务调用。
-![](https://github.com/shijinshi/justitia/tree/master/doc/img/structure.png)
+![structure](/doc/img/structure.png)
 
 1.	Dao server
 提供数据存储和读取的接口，可以根据实际需求使用不同数据库，默认使用MYSQL。
@@ -76,9 +76,9 @@ vi /lib/systemd/system/docker.service
 6.	Channel server
 通道服务通过提交通道配置来管理联盟和通道成员。
 由联盟管理员（掌握orderer节点管理员用户私钥），通过修改系统通道中的联盟信息，以达到修改联盟配置和增删联盟成员的目的。申请人通过本系统生成包含本组织身份信息的通道配置数据，然后将次配置数据作为申请材料通过邮件等其他形式向联盟管理员发起加入申请。若联盟管理员同意将其加入联盟（相应的审批机制有具体业务决定），便从orderer节点获取最新的系统通道配置区块，将申请者提交的配置信息增加到联盟中生成配置更新交易。此后申请者便作为联盟成员与其他成员拥有相同的权力，也可以创建通道。删除联盟成员则以相同操作，从联盟配置中去除于此成员的相关配置。
-![](https://github.com/shijinshi/justitia/tree/master/doc/img/Add-member-to-consortium.png)
+![Add-member-to-consortium.png](/doc/img/Add-member-to-consortium.png)
 通道成员和通道配置的管理与管理联盟的方式类似，由通道成员的管理员用户发起修改通道配置的交易来实现。但是与修改系统通道不同的是，在默认策略下想要修改通道配置需要通道内超过半数的组织的管理员对修改提案背书，当然这个策略是可修改的。另一方面，组织管理员用户背书的过程无法在链上完成，如果引入一个中心化的服务帮助完成这个签名流程又太过复杂。为了在链上解决这个问题，我们在peer节点镜像中增加了一个系统链码CMSCC（channel manager system chaincode）辅助完成这个签名的审批流程。成员加入通道的过程如下图所示，过程与组织加入联盟类似。申请者向介绍人（通道中原有的任意成员）发起加入申请，介绍人获取通道最新配置区块生成通道更新交易。借助于CMSCC将此交易广播给通道中的其他成员，其他成员可以选择接受或者拒绝此申请。直到接受的成员数量满足通道策略时，介绍人将签名结果和更新交易发送给Orderer节点更新通道配置。此后申请者便作为通道成员与其他成员拥有相同的权力。删除通道成员则以相同操作，从通道配置中去除对应成员的配置。
-![](https://github.com/shijinshi/justitia/tree/master/doc/img/Add-member-to-channel.png)
+![Add-member-to-channel.png](/doc/img/Add-member-to-channel.png)
 
 ## 等待完善
 当前本版的代码只是一个简单的demo，在用户友好性和功能的优化上任然有很多工作未完成，当前已知的未解决问题可查看[Issue文档](doc\Issue.md)
